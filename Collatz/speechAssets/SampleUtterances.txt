@@ -1,0 +1,6 @@
+CollatzIntent For {seed}
+CollatzIntent How about {seed}
+CollatzIntent To do {seed}
+CollatzIntent To compute {seed}
+CollatzIntent What is the sequence for {seed}
+CollatzIntent Tell me the sequence for {seed}
