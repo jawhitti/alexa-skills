@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "intents": [
     {
@@ -10,4 +11,18 @@
       ]
     }
   ]
+=======
+{
+  "intents": [
+    {
+      "intent": "CollatzIntent",
+      "slots": [
+        {
+          "name": "seed",
+          "type": "AMAZON.NUMBER"
+        }
+      ]
+    }
+  ]
+>>>>>>> 776ad82cf29d72e893e26b849e41501a645849c2
 }

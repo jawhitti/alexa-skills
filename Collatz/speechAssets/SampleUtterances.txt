@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 CollatzIntent For {seed}
 CollatzIntent How about {seed}
 CollatzIntent To do {seed}
 CollatzIntent To compute {seed}
 CollatzIntent What is the sequence for {seed}
 CollatzIntent Tell me the sequence for {seed}
+=======
+CollatzIntent For {seed}
+CollatzIntent How about {seed}
+CollatzIntent To do {seed}
+CollatzIntent To compute {seed}
+CollatzIntent What is the sequence for {seed}
+CollatzIntent Tell me the sequence for {seed}
+>>>>>>> 776ad82cf29d72e893e26b849e41501a645849c2
