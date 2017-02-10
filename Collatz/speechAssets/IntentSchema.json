@@ -1,0 +1,13 @@
+{
+  "intents": [
+    {
+      "intent": "CollatzIntent",
+      "slots": [
+        {
+          "name": "seed",
+          "type": "AMAZON.NUMBER"
+        }
+      ]
+    }
+  ]
+}

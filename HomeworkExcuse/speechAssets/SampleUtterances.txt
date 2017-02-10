@@ -1,0 +1,5 @@
+GetExcuseIntent for an excuse
+GetExcuseIntent for a homework excuse
+GetExcuseIntent for a good excuse why I forgot my homework
+GetExcuseIntent for help thinking of a good excuse
+GetExcuseIntent for another excuse
