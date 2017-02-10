@@ -1,0 +1,5 @@
+GetAdviceIntent What I should wear today
+GetAdviceIntent What clothes should I wear
+GetAdviceIntent What  I should wear
+GetAdviceIntent What should I wear
+GetAdviceIntent For fashion advice
