@@ -1,0 +1,15 @@
+GetBulletinIntent What do I need to know
+GetBulletinIntent What's going on
+GetBulletinIntent What's new
+GetBulletinIntent What do I need to know today
+GetBulletinIntent What's going on today
+GetBulletinIntent What's new today
+GetBulletinIntent Read the bulletin
+GetBulletinIntent Read the bulletin to me
+GetBulletinIntent What's in the bulletin
+DoIHaveSchoolIntent Do I have school today
+DoIHaveSchoolIntent Do I have to go to school
+DoIHaveSchoolIntent  Do I have to go to school today
+DoIHaveSchoolIntent Is there school today
+DoIHaveSchoolIntent Is today a school day
+DoIHaveSchoolIntent Is it a school day
