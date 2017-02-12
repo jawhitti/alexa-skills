@@ -13,3 +13,15 @@ DoIHaveSchoolIntent  Do I have to go to school today
 DoIHaveSchoolIntent Is there school today
 DoIHaveSchoolIntent Is today a school day
 DoIHaveSchoolIntent Is it a school day
+QueryLunchIntent What's for lunch
+QueryLunchIntent What's for lunch today
+QueryLunchIntent What's on the lunch menu
+QueryBreakfastIntent What's for breakfast
+QueryBreakfastIntent What's for breakfast tomorrow
+QueryActivityIntent if I have {activity} today
+QueryActivityIntent Do I have {activity} today
+QueryActivityIntent if I have {activity} 
+QueryActivityIntent Do I have {activity} 
+QueryActivityIntent if there is {activity} today
+QueryActivityIntent Is there {activity} today
+QueryActivityIntent if {activity} is meeting today
