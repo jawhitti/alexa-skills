@@ -8,17 +8,36 @@ var http = require('http');
 
 const handlers = {
     'LaunchRequest': function () {
+      console.log("LaunchRequest");
         this.emit('GetBulletin');
     },
     'GetBulletinIntent': function () {
+      console.log("GetBulletinIntent");
         this.emit('GetBulletin');
     },
+    'QueryLunchIntent': function () {
+      console.log("QueryLunchIntent");
+      var thisobj = this;
+      getBulletinHtml(function(html) {  thisobj.emit(':tell', getBulletinText(html, false, item => item.includes("lunch menu") )); });
+    },
+    'QueryBreakfastIntent': function () {
+      console.log("QueryBreakfastIntent");
+      var thisobj = this;
+      getBulletinHtml(function(html) {  thisobj.emit(':tell', getBulletinText(html, false,  item => item.includes("breakfast menu") )); });
+    },
+    'QueryActivityIntent' : function() { 
+      var thisobj = this;
+      var activity = this.event.request.intent.slots.activity.value;
+      getBulletinHtml(function(html) {  thisobj.emit(':tell', getActivityText(html, activity.toLowerCase())); });
+    },
+    
     'DoIHaveSchoolIntent': function () {
         this.emit(":tell", doIHaveSchoolToday());
     },
+
     'GetBulletin': function () {
       var thisobj = this;
-      getBulletin(function(html) {  thisobj.emit(':tell', getBulletinText(html)); });
+      getBulletinHtml(function(html) {  thisobj.emit(':tell', getBulletinText(html, true, item => true )); });
 
     },
 //    'AMAZON.HelpIntent': function () {
@@ -46,7 +65,7 @@ exports.handler = (event, context) => {
 
 ////////////////////////////////////////
 
-function getBulletin(callback) {
+function getBulletinHtml(callback) {
            var options = {
           host: 'fhsdbryan.sharpschool.net',
           path: '/news/daily_announcements'
@@ -68,57 +87,94 @@ function getBulletin(callback) {
 }
 
 
-function processTitle(match) {
+function sanitize(match) {
   var s = match;
   s = s.replace('**', '').replace('<br>','');
-  s = s.replace('</span>', ''),
-  
   s = s.split('</span>').join(''),
   s = s.split('&cent;').join(' cents');
   s = s.split('&nbsp;').join(' ');
+  s = s.split('&ndash;').join('-');
   s = s.split('&mdash;').join('-');
   s = s.split('&rsquo;').join('\'');
   s = s.split('&quote;').join('\"');
-  s = s + ". ";
   //s = '<p>' + s + '</p>';
 
 //  console.log(s);
   return s;
 }
 
-
-function processText(match) {
-  var s = match;
-  s = s.replace('**', '').replace('<br>','');
-  s = s.split('</span>').join(''),
-  s = s.split('&cent;').join(' cents');
-  s = s.split('&nbsp;').join(' ');
-  s = s.split('&mdash;').join('-');
-  s = s.split('&rsquo;').join('\'');
-  s = s.split('&quote;').join('\"');
-  s = s + ". ";
-
-  s = s + ' ';
-  //s = '<p>' + s + '</p>';
-  console.log(s);
-  
-  return s;
-}
-
-function getBulletinText(str) {
-    var titlere = new RegExp('BRYAN STUDENT ANNOUNCEMENTS.*?&mdash;(.*?)</span>');
-    var title = str.match(titlere);
-    var speech = processTitle(title[0]);
+function getBulletinText(str, includeTitle, selector) {
+    var speech = '';
     
-    var re = new RegExp('[*][*]\s*?(.*?)<br>', 'g');
-    var matches = str.match(re);
+    if(includeTitle)
+        speech += getBulletinTitle(str);
+        
+        
+    var items = getBulletinItems(str);
 
-    matches.forEach(function(match) { 
-       speech += processText(match); 
+    items.forEach(function(item) { 
+        console.log("calling selector for '" + item + "'");
+        if(selector(item)) {
+          console.log("selector returned true");
+          speech += item; 
+          speech += ' ';
+        }
      });
      
      console.log("final speech text:" + speech);
      return speech;
+}
+
+function getActivityText(str, activity) {
+    var speech = '';
+    
+    var items = getBulletinItems(str);
+
+    items.forEach(function(item) { 
+        if(item.toLowerCase().includes(activity)) {
+          console.log(activity + "found in " + item);
+          speech += item; 
+          speech += ' ';
+        }
+        else {
+          console.log(activity + "not found in " + item);
+
+        }
+     });
+     
+     if(speech.length === 0) {
+         speech = activity + " is not mentioned in today's bulletin.";
+     }
+     
+     console.log("final speech text:" + speech);
+     return speech;
+}
+
+
+
+function getBulletinTitle(str) {
+    var regex = new RegExp('BRYAN STUDENT ANNOUNCEMENTS.*?&mdash;(.*?)</span>');
+    var title = str.match(regex);
+    var retval =  sanitize(title[0]);
+    retval = "<p>" + retval + ".</p>";
+    console.log("title:" + retval);
+    return retval;
+}
+
+function getBulletinItems(str) {
+
+    var retval = [];
+   
+    var regex = new RegExp('[*][*]\s*?(.*?)<br>', 'g');
+    var matches = str.match(regex);
+
+    matches.forEach(function(match) { 
+       var text = sanitize(match);
+       retval.push(text); 
+     });
+     
+     console.log(retval.length + " bulletin items found");
+     return retval;
 }
 
 function doIHaveSchoolToday() {
@@ -180,7 +236,6 @@ function getAttendanceInfo(date)
     
     return { attendance:"error", name:"error" };
 }
-
 
 
 
