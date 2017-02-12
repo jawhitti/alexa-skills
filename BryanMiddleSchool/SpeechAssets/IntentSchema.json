@@ -5,6 +5,21 @@
     },
     {
       "intent": "DoIHaveSchoolIntent"
+    },
+    {
+      "intent": "QueryLunchIntent"
+    },
+    {
+      "intent": "QueryBreakfastIntent"
+    },
+    {
+      "intent" : "QueryActivityIntent",
+       "slots": [
+        {
+          "name": "activity",
+          "type": "STUDENTACTIVITY"
+        }
+         ]
     }
   ]
 }
